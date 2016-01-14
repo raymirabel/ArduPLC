@@ -23,6 +23,8 @@
 #define AIN6    A3
 #define LED     12
 
+#define CAL_5V  5.000    // Para mayor precisión en la medida de entradas analógicas, mide el voltaje en la borna auxiliar de 5V y copialo aquí.
+
  
 #define ADDR_RTC   0x51  // Direccion I2C del RTC
 Rtc_Pcf8563 rtc;  
@@ -41,11 +43,12 @@ void menu(void){
   Serial.println(F("Rn       Activa rele n (n de 1 a 4)"));
   Serial.println(F("Fn       Desactiva rele n (n de 1 a 4)"));
   Serial.println(F("D        Lee entradas digitales"));
-  Serial.println(F("A        Lee entradas analogicas"));
+  Serial.println(F("A        Lee entradas analogicas (10V)"));
+  Serial.println(F("S        Lee entradas analogicas (20mA)"));
   Serial.println(F("L        Test led L"));  
-  Serial.println(F("RT       Lee fecha y hora"));
-  Serial.println(F("WDddmmaa Escribe fecha en el RTC"));
-  Serial.println(F("WThhmmss Escribe hora en el RTC"));  
+  Serial.println(F("RT       Lee fecha y hora (solo con RTC)"));
+  Serial.println(F("WDddmmaa Escribe fecha en el RTC (solo con RTC)"));
+  Serial.println(F("WThhmmss Escribe hora en el RTC (solo con RTC)"));  
 }
 
 String inString;
@@ -106,6 +109,11 @@ void loop(){
         analogR();
         Serial.println("OK");        
       }  
+      // Lee entradas analogicas mA...
+      if(inString.startsWith("S")){
+        analogCurrent();
+        Serial.println("OK");        
+      }       
       // Lee entradas digitales...
       if(inString.startsWith("D")){
         digitalR();
@@ -174,6 +182,13 @@ void analogR(){
   v4 = ((float)an4 * 10.0) / 1023.0;  
   v5 = ((float)an5 * 10.0) / 1023.0;  
   v6 = ((float)an6 * 10.0) / 1023.0;  
+
+  v1 *= (CAL_5V/5.000);
+  v2 *= (CAL_5V/5.000);
+  v3 *= (CAL_5V/5.000);
+  v4 *= (CAL_5V/5.000);
+  v5 *= (CAL_5V/5.000);
+  v6 *= (CAL_5V/5.000);  
  
   Serial.print("AN1: ");
   Serial.print(v1,3);
@@ -193,6 +208,50 @@ void analogR(){
   Serial.print("AN6: ");
   Serial.print(v6,3);
   Serial.println(" v");
+}
+
+void analogCurrent(){
+  int an1, an2, an3, an4, an5, an6;
+  float i1, i2, i3, i4, i5, i6;
+  an1 = analogRead(AIN1);  
+  an2 = analogRead(AIN2);
+  an3 = analogRead(AIN3);    
+  an4 = analogRead(AIN4);  
+  an5 = analogRead(AIN5);  
+  an6 = analogRead(AIN6);  
+  
+  i1 = ((float)an1 * 20.0) / 1023.0;
+  i2 = ((float)an2 * 20.0) / 1023.0;
+  i3 = ((float)an3 * 20.0) / 1023.0;  
+  i4 = ((float)an4 * 20.0) / 1023.0;  
+  i5 = ((float)an5 * 20.0) / 1023.0;  
+  i6 = ((float)an6 * 20.0) / 1023.0;  
+  
+  i1 *= (CAL_5V/5.000);
+  i2 *= (CAL_5V/5.000);
+  i3 *= (CAL_5V/5.000);
+  i4 *= (CAL_5V/5.000);
+  i5 *= (CAL_5V/5.000);
+  i6 *= (CAL_5V/5.000);  
+ 
+  Serial.print("AN1: ");
+  Serial.print(i1,2);
+  Serial.println(" mA");
+  Serial.print("AN2: ");
+  Serial.print(i2,2);
+  Serial.println(" mA");
+  Serial.print("AN3: ");
+  Serial.print(i3,2);
+  Serial.println(" mA");
+  Serial.print("AN4: ");
+  Serial.print(i4,2);
+  Serial.println(" mA");
+  Serial.print("AN5: ");
+  Serial.print(i5,2);
+  Serial.println(" mA");
+  Serial.print("AN6: ");
+  Serial.print(i6,2);
+  Serial.println(" mA");
 }
 
 void digitalR(){
