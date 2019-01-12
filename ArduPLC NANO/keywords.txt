@@ -1,0 +1,28 @@
+#######################################
+# Instances (KEYWORD1)
+#######################################
+ArduPLCnano	KEYWORD1
+
+#######################################
+# Methods and Functions (KEYWORD2)
+#######################################
+relayWrite	KEYWORD2
+relayRead	KEYWORD2
+relayToggle	KEYWORD2
+digitalRead	KEYWORD2
+
+#######################################
+# Constants (LITERAL1)
+#######################################
+RELAY1		LITERAL1
+RELAY2		LITERAL1
+RELAY3		LITERAL1
+RELAY4		LITERAL1
+DIN1    	LITERAL1
+DIN2    	LITERAL1
+DIN3    	LITERAL1
+DIN4   	 	LITERAL1
+BUTTON_UP   LITERAL1
+BUTTON_DOWN LITERAL1
+BUTTON_LEFT LITERAL1
+BUTTON_RIGHT LITERAL1
