@@ -4,7 +4,7 @@
 ----------
 ArduPLC NANO es un mini PLC (programmable logic controller) basado en arquitectura Arduino. Está pensado y diseñado para usos en entornos industriales y domésticos.  Puedes programar fácilmente ArduPLC NANO en cualquier entorno de desarrollo para Arduino y compatibles. Asegurate que seleccionas como placa destino **Arduino MICRO**.
 
-![ArduX1](https://github.com/raymirabel/ArduPLC_NANO/blob/master/doc/ArduPLC_NANO.png)
+![ArduX1](https://github.com/raymirabel/ArduPLC/blob/master/ArduPLC%20NANO/doc/ArduPLC_NANO.png)
 
 Lo más destacado:
 
